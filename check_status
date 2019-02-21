@@ -1,0 +1,36 @@
+#!/bin/bash
+
+
+CHECK=$(systemctl status | awk -F 'State:' '{print $2}' | awk -F '{' '{print $1}')
+STATUS=$(echo $CHECK)
+
+critical ()
+        {
+
+        echo "CRITICAL"
+        echo "Status: $STATUS"
+        exit 2
+
+        }
+
+good ()
+        {
+
+        echo "OK"
+        echo "Status: $STATUS"
+        exit 0
+
+        }
+
+main ()
+        {
+
+        if [[ $STATUS -ne "running" ]]; then
+                critical;
+        else
+                good;
+        fi
+
+        }
+
+main;
