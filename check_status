@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 CHECK=$(systemctl status | awk -F 'State:' '{print $2}' | awk -F '{' '{print $1}')
 STATUS=$(echo $CHECK)
 
@@ -9,6 +8,7 @@ critical ()
 
         echo "CRITICAL"
         echo "Status: $STATUS"
+        systemctl | grep failed | awk -F '●' '{print $2}' | awk -F ' ' '{print $1}'
         exit 2
 
         }
@@ -25,10 +25,10 @@ good ()
 main ()
         {
 
-        if [[ $STATUS -ne "running" ]]; then
-                critical;
-        else
+        if [[ $STATUS = "running" ]]; then
                 good;
+        else
+                critical;
         fi
 
         }
