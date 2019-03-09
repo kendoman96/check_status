@@ -13,6 +13,15 @@ critical ()
 
         }
 
+warn ()
+        {
+
+        echo "WARNING"
+        echo "Status: $STATUS"
+        exit 1
+
+        }
+
 good ()
         {
 
@@ -28,7 +37,11 @@ main ()
         if [[ $STATUS = "running" ]]; then
                 good;
         else
-                critical;
+                if [[ $STATUS = "starting" ]]; then
+                        warn;
+                else
+                        critical;
+                fi
         fi
 
         }
