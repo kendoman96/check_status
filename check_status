@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CHECK=$(systemctl status | awk -F 'State:' '{print $2}' | awk -F '{' '{print $1}')
+CHECK=$(systemctl status | head -n 2 | awk -F 'State: ' '{print $2}')
 STATUS=$(echo $CHECK)
 
 critical ()
